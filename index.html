@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio — 응용화학 분석 연구원</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=Noto+Sans+KR:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #F5F2EC;
+    --surface: #EDEAE2;
+    --ink: #1A1A18;
+    --ink-muted: #6B6860;
+    --ink-faint: #A8A59E;
+    --accent: #2A4D3E;
+    --accent-light: #D4E6DF;
+    --accent-warm: #8B5E3C;
+    --line: rgba(26,26,24,0.12);
+    --serif: 'DM Serif Display', Georgia, serif;
+    --mono: 'DM Mono', monospace;
+    --sans: 'Noto Sans KR', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-weight: 300;
+    line-height: 1.7;
+    font-size: 15px;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 1rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(245,242,236,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-logo {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--ink-muted);
+    letter-spacing: 0.08em;
+    text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    font-size: 13px;
+    font-family: var(--mono);
+    color: var(--ink-muted);
+    text-decoration: none;
+    letter-spacing: 0.04em;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--ink); }
+
+  /* SECTIONS */
+  section { padding: 6rem 3rem; max-width: 900px; margin: 0 auto; }
+
+  /* HERO */
+  #hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-top: 8rem;
+    max-width: 900px;
+  }
+  .hero-tag {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--accent);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 0.6s 0.2s forwards;
+  }
+  .hero-name {
+    font-family: var(--serif);
+    font-size: clamp(3rem, 8vw, 6rem);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin-bottom: 1rem;
+    opacity: 0;
+    animation: fadeUp 0.6s 0.35s forwards;
+  }
+  .hero-name em {
+    font-style: italic;
+    color: var(--accent);
+  }
+  .hero-desc {
+    font-size: 17px;
+    color: var(--ink-muted);
+    max-width: 520px;
+    margin-bottom: 2.5rem;
+    line-height: 1.8;
+    opacity: 0;
+    animation: fadeUp 0.6s 0.5s forwards;
+  }
+  .hero-contacts {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    opacity: 0;
+    animation: fadeUp 0.6s 0.65s forwards;
+  }
+  .contact-btn {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    padding: 0.6rem 1.4rem;
+    border: 1px solid var(--ink);
+    border-radius: 2px;
+    text-decoration: none;
+    color: var(--ink);
+    transition: background 0.2s, color 0.2s;
+  }
+  .contact-btn:hover { background: var(--ink); color: var(--bg); }
+  .contact-btn.filled { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .contact-btn.filled:hover { background: var(--ink); border-color: var(--ink); }
+
+  /* SECTION HEADER */
+  .section-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 0.5rem;
+  }
+  .section-title {
+    font-family: var(--serif);
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    line-height: 1.15;
+    margin-bottom: 3rem;
+    color: var(--ink);
+  }
+  .divider {
+    width: 40px;
+    height: 1px;
+    background: var(--accent);
+    margin: 1rem 0 3rem;
+  }
+
+  /* SKILLS */
+  #skills { background: var(--surface); border-radius: 4px; max-width: 100%; padding: 5rem 3rem; }
+  #skills > * { max-width: 900px; margin-left: auto; margin-right: auto; }
+  .skills-intro { max-width: 900px; margin: 0 auto 3rem; }
+
+  .skill-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .skill-card {
+    background: var(--surface);
+    padding: 1.75rem;
+  }
+  .skill-card-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.75rem;
+  }
+  .skill-card-title {
+    font-size: 15px;
+    font-weight: 500;
+    margin-bottom: 0.75rem;
+    color: var(--ink);
+  }
+  .skill-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 0.75rem;
+  }
+  .tag {
+    font-family: var(--mono);
+    font-size: 11px;
+    padding: 3px 10px;
+    border: 1px solid var(--line);
+    border-radius: 2px;
+    color: var(--ink-muted);
+    background: var(--bg);
+  }
+  .tag.accent { border-color: var(--accent); color: var(--accent); background: var(--accent-light); }
+
+  /* EXPERIENCE */
+  .exp-item {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    gap: 2rem;
+    padding: 2.5rem 0;
+    border-top: 1px solid var(--line);
+  }
+  .exp-item:last-child { border-bottom: 1px solid var(--line); }
+  .exp-period {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--ink-faint);
+    padding-top: 3px;
+    line-height: 1.5;
+  }
+  .exp-org {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 0.4rem;
+  }
+  .exp-role {
+    font-size: 17px;
+    font-weight: 500;
+    margin-bottom: 0.75rem;
+    color: var(--ink);
+  }
+  .exp-desc {
+    font-size: 14px;
+    color: var(--ink-muted);
+    line-height: 1.8;
+  }
+  .exp-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 1rem;
+  }
+  .badge {
+    font-family: var(--mono);
+    font-size: 11px;
+    padding: 3px 10px;
+    background: var(--accent-light);
+    color: var(--accent);
+    border-radius: 2px;
+  }
+  .highlight-box {
+    margin-top: 1.25rem;
+    padding: 1rem 1.25rem;
+    border-left: 2px solid var(--accent);
+    background: var(--accent-light);
+    border-radius: 0 2px 2px 0;
+    font-size: 13px;
+    color: var(--accent);
+    line-height: 1.7;
+  }
+
+  /* PROJECT */
+  .project-card {
+    border: 1px solid var(--line);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .project-header {
+    background: var(--accent);
+    padding: 2rem 2rem 1.5rem;
+    color: #fff;
+  }
+  .project-category {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    opacity: 0.7;
+    margin-bottom: 0.5rem;
+  }
+  .project-title {
+    font-family: var(--serif);
+    font-size: 1.5rem;
+    line-height: 1.3;
+    margin-bottom: 0.5rem;
+  }
+  .project-sub {
+    font-size: 13px;
+    opacity: 0.75;
+  }
+  .project-body {
+    padding: 2rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    background: var(--bg);
+  }
+  .project-section-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 0.5rem;
+  }
+  .project-text {
+    font-size: 14px;
+    color: var(--ink-muted);
+    line-height: 1.8;
+  }
+
+  /* EDUCATION & TRAINING */
+  .training-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1rem;
+  }
+  .training-card {
+    padding: 1.5rem;
+    border: 1px solid var(--line);
+    border-radius: 2px;
+    background: var(--bg);
+  }
+  .training-year {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-faint);
+    margin-bottom: 0.4rem;
+  }
+  .training-name {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 0.25rem;
+  }
+  .training-org {
+    font-size: 13px;
+    color: var(--ink-muted);
+  }
+
+  /* REFERENCE */
+  #reference {
+    background: var(--ink);
+    color: var(--bg);
+    max-width: 100%;
+    padding: 5rem 3rem;
+  }
+  #reference > * { max-width: 900px; margin-left: auto; margin-right: auto; }
+  #reference .section-label { color: rgba(245,242,236,0.4); }
+  #reference .section-title { color: var(--bg); }
+  .ref-card {
+    border: 1px solid rgba(245,242,236,0.15);
+    border-radius: 2px;
+    padding: 2rem;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 1.5rem;
+    align-items: start;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .ref-initial {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--serif);
+    font-size: 1.3rem;
+    color: #fff;
+    flex-shrink: 0;
+  }
+  .ref-name {
+    font-family: var(--serif);
+    font-size: 1.2rem;
+    color: var(--bg);
+    margin-bottom: 0.25rem;
+  }
+  .ref-position {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: rgba(245,242,236,0.5);
+    margin-bottom: 0.75rem;
+    letter-spacing: 0.04em;
+  }
+  .ref-note {
+    font-size: 14px;
+    color: rgba(245,242,236,0.65);
+    line-height: 1.7;
+  }
+  .ref-contact-note {
+    margin-top: 1rem;
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--accent-light);
+    letter-spacing: 0.06em;
+  }
+
+  /* CONTACT FOOTER */
+  footer {
+    padding: 4rem 3rem;
+    max-width: 900px;
+    margin: 0 auto;
+    border-top: 1px solid var(--line);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  .footer-name {
+    font-family: var(--serif);
+    font-size: 1.1rem;
+    color: var(--ink);
+  }
+  .footer-links {
+    display: flex;
+    gap: 1.5rem;
+  }
+  .footer-links a {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--ink-muted);
+    text-decoration: none;
+    letter-spacing: 0.04em;
+    transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--ink); }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 640px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    section { padding: 4rem 1.5rem; }
+    #skills, #reference { padding: 4rem 1.5rem; }
+    .exp-item { grid-template-columns: 1fr; gap: 0.5rem; }
+    .project-body { grid-template-columns: 1fr; }
+    footer { padding: 3rem 1.5rem; flex-direction: column; align-items: flex-start; }
+    #hero { padding: 7rem 1.5rem 4rem; min-height: auto; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#hero">PYJ.PORTFOLIO</a>
+  <ul class="nav-links">
+    <li><a href="#skills">역량</a></li>
+    <li><a href="#experience">경험</a></li>
+    <li><a href="#project">프로젝트</a></li>
+    <li><a href="#education">교육</a></li>
+    <li><a href="#reference">추천인</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero" style="padding-left:3rem; padding-right:3rem; position: relative;">
+  <p class="hero-tag">응용화학 · 분석화학 · 품질관리</p>
+  <h1 class="hero-name">박유진<br><em>Analytical Chemist</em></h1>
+  <p class="hero-desc">
+    GC·HPLC를 비롯한 다수의 분석기기 실무 경험과 한국화학연구원 인턴연구원 경력을 바탕으로,
+    정밀 분석과 품질관리(QC) 분야에서 신뢰할 수 있는 데이터를 만들어냅니다.
+  </p>
+<div style="
+  position: absolute;
+  top: 0; right: 0;
+  width: 180px;
+  aspect-ratio: 3/4;
+  overflow: hidden;
+  border-radius: 2px;
+">
+  <img src="photo.jpg" alt="증명사진" style="
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+  ">
+</div>
+  <div class="hero-contacts">
+    <a class="contact-btn filled" href="mailto:tpfbs2@naver.com">이메일 연락하기</a>
+    <a class="contact-btn" href="#reference">추천인 확인</a>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<div id="skills">
+  <div class="skills-intro">
+    <p class="section-label">Core Competencies</p>
+    <h2 class="section-title">핵심 역량</h2>
+    <div class="divider"></div>
+  </div>
+  <div class="skill-grid">
+    <div class="skill-card">
+      <p class="skill-card-label">Chromatography</p>
+      <p class="skill-card-title">크로마토그래피 분석</p>
+      <p style="font-size:13px; color:var(--ink-muted);">전기전자제품 유해물질 분석 실무 및 HPLC 전문 교육 이수</p>
+      <div class="skill-tags">
+        <span class="tag accent">GC-MS</span>
+        <span class="tag accent">HPLC-DAD</span>
+        <span class="tag">프탈레이트 분석</span>
+        <span class="tag">Target 분자량 제거율 분석</span>
+        <span class="tag">데이터 해석</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <p class="skill-card-label">Surface & Structure Analysis</p>
+      <p class="skill-card-title">표면·구조 분석기기</p>
+      <p style="font-size:13px; color:var(--ink-muted);">한국화학연구원 OSN 연구 과정에서 다수 기기 직접 운용 및 데이터 해석</p>
+      <div class="skill-tags">
+        <span class="tag accent">SEM</span>
+        <span class="tag accent">AFM</span>
+        <span class="tag accent">XRD</span>
+        <span class="tag accent">XPS</span>
+        <span class="tag accent">SAXS</span>
+        <span class="tag accent">BET</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <p class="skill-card-label">Spectroscopy</p>
+      <p class="skill-card-title">분광 분석</p>
+      <p style="font-size:13px; color:var(--ink-muted);">소재 특성 분석 및 멤브레인 연구에 실제 적용</p>
+      <div class="skill-tags">
+        <span class="tag accent">FT-IR</span>
+        <span class="tag accent">UV-Vis</span>
+        <span class="tag">스펙트럼 해석</span>
+      </div>
+    </div>
+<div class="skill-card">
+  <p class="skill-card-label">Quality & Compliance</p>
+  <p class="skill-card-title">품질·규격 이해</p>
+  <p style="font-size:13px; color:var(--ink-muted);">시험소 운영 체계 및 바이오의약품 GMP 교육 이수</p>
+  <div class="skill-tags">
+    <span class="tag accent">ISO/IEC 17025</span>
+    <span class="tag accent">바이오 의약품 GMP</span>
+  </div>
+</div>
+<div class="skill-card" style="grid-column: span 2;">
+  <p class="skill-card-label">Research & Communication</p>
+  <p class="skill-card-title">기술 문서 이해</p>
+  <p style="font-size:13px; color:var(--ink-muted);"> OSN 관련 영문 논문 레퍼런스 독해 및 연구 결과 기반 영문 논문 초안 작성 경험 보유</p>
+  <div class="skill-tags">
+    <span class="tag accent">영문 문헌 독해</span>
+    <span class="tag accent">영문 논문 작성</span>
+  </div>
+</div>
+  </div>
+</div>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <p class="section-label">Experience</p>
+  <h2 class="section-title">경험</h2>
+  <div class="divider"></div>
+
+  <div class="exp-item">
+    <div class="exp-period">2025. 03<br>— 2025. 08<br>(6개월) </div>
+    <div>
+      <p class="exp-org">KOTITI 시험연구원 · 전기전자(유기) 팀</p>
+      <p class="exp-role">연구장비분야 전문인력양성과정 — 유해물질 분석</p>
+      <p class="exp-desc">
+        전기전자제품에 포함된 유해물질 분석 실무를 수행하였으며,
+        GC를 활용한 프탈레이트류(DEHP, DBP 등) 정량 분석을 주로 담당하였습니다.
+        이 과정에서 실제 시험 환경에서의 샘플 전처리부터 크로마토그램 해석까지 전 과정을 
+        경험할 수 있었습니다.
+      </p>
+      <div class="exp-badges">
+        <span class="badge">GC-MS</span>
+        <span class="badge">프탈레이트 정량 분석</span>
+        <span class="badge">전처리 </span>
+        <span class="badge">유해물질 시험</span>
+      </div>
+    </div>
+  </div>  
+
+  <div class="exp-item">
+    <div class="exp-period">2025. 09<br>— 2026. 02<br>(6개월)</div>
+    <div>
+      <p class="exp-org">한국화학연구원 · 분리정제연구센터</p>
+      <p class="exp-role">인턴연구원 — OSN 분리막 연구</p>
+      <p class="exp-desc">
+        유기용매 나노여과(OSN, Organic Solvent Nanofiltration) 분야 연구과제 수행을 보조하며,
+        분리막 제막 공정 전반과 Cross-flow Filtration 및 Dead-end Filtration 장치를 활용한 막의 
+        투과·제거율 측정 실험을 주도적으로 수행하였습니다.
+        이와 더불어, SEM·AFM·SAXS·BET·FT-IR·UV-Vis 등 다양한 분석기기를 통한
+        막 특성 평가 실험 역시 직접 진행한 바 있습니다. 
+        2025년 11월부터는 지도 박사님께 인턴십 참여 태도에 대한 긍정적인 평가를 받아
+        논문 초안 작성에 참여하였으며, 이를 통해 실험 데이터의 해석과 결과를 
+        구조화하는 역량을 키울 수 있었습니다. 
+      </p>
+      <div class="exp-badges">
+        <span class="badge">OSN 제막</span>
+        <span class="badge">Cross-flow/ Dead-end Filtration</span>
+        <span class="badge">SEM </span>
+        <span class="badge">XRD </span>
+        <span class="badge">SAXS </span>
+        <span class="badge">AFM </span>
+        <span class="badge">XPS </span>
+        <span class="badge">FT-IR </span>
+        <span class="badge">UV-Vis </span>
+        <span class="badge">HPLC-DAD</span>
+        <span class="badge">BET </span>
+        <span class="badge">논문 초안 작성</span>
+      </div>
+      <div class="highlight-box">
+        지도 박사(한국화학연구원 분리정제연구센터 강미소 박사님)의 추천 하에
+        연구 기여도와 역량을 확인하실 수 있습니다.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECT -->
+<section id="project">
+  <p class="section-label">Capstone Project</p>
+  <h2 class="section-title">프로젝트</h2>
+  <div class="divider"></div>
+
+<div class="project-card">
+  <div class="project-header">
+    <p class="project-category">졸업 캡스톤 프로젝트 · 4인 팀 · 유기화학 랩실</p>
+    <h3 class="project-title">MOF를 이용한 이산화탄소 흡착 소재 개발</h3>
+    <p class="project-sub">응용화학공학부 응용화학전공 졸업연구 · 4학년 · 예산 30만원 이내</p>
+<a href="https://drive.google.com/file/d/1191p4ar0KxiNeqFLbmM8D-OkFTIWl6rL/view?usp=sharing" target="_blank" style="
+  display: inline-block;
+  margin-top: 0.75rem;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  padding: 4px 12px;
+  border: 1px solid rgba(245,242,236,0.4);
+  border-radius: 2px;
+  color: rgba(245,242,236,0.8);
+  text-decoration: none;
+  transition: background 0.2s;
+" onmouseover="this.style.background='rgba(245,242,236,0.15)'" onmouseout="this.style.background='transparent'">
+  논문 보기 →
+</a>
+  </div>
+  <div style="padding: 2rem; background: var(--bg); display: flex; flex-direction: column; gap: 1.5rem;">
+    <div>
+      <p class="project-section-label">배경 및 목적</p>
+      <p class="project-text">
+        대구·경북 지역 산업체 현안 기반 8개 키워드 중 온실가스 흡착소재를 선택. <br>
+        지속적으로 대두되는 지구온난화를 해결하기 위해 
+        기존 MIL-127의 금속 노드를 Fe에서 Cu로 대체한 Cu-MIL-127을 합성하여
+        CO₂ 흡착 성능을 평가하였습니다.
+      </p>
+    </div>
+    <div>
+      <p class="project-section-label">본인 역할</p>
+      <p class="project-text">
+        4인 팀 구성으로 진행하였으며, MOF 합성 실험 및
+        XRD·FT-IR 분석기기를 활용한 특성 평가와 데이터 해석에 참여하였습니다.
+      </p>
+    </div>
+    <div>
+      <p class="project-section-label">결과 및 고찰</p>
+      <p class="project-text">
+        BET 결과를 통해 합성물의 흡착 성능이 기존 다공성 물질 대비 현저히 낮다는
+        결과를 확인할 수 있었습니다. 이에 대한 원인을 찾기 위해 BET 그래프 개형 분석을 진행하였고, 
+        합성 과정에서 사용된 용매(MeOH·H₂O·AcOH)가 낮은 전처리 온도(50°C)로 인해 제거되지 않아 
+        기공의 한쪽을 막은 것으로 추정할 수 있었습니다. 
+        이후, TGA 분석 미수행으로 열적 특성 정보에 한계를 제시하며
+        후속 연구 과제의 방향성을 제시하였습니다. 
+      </p>
+    </div>
+    <div>
+      <p class="project-section-label">키워드 </p>
+      <div style="display:flex; flex-wrap:wrap; gap:6px; margin-top:0.5rem;">
+        <span class="tag accent">Cu-MIL-127 합성</span>
+        <span class="tag accent">XRD</span>
+        <span class="tag accent">FT-IR</span>
+        <span class="tag accent">BET</span>
+        <span class="tag">합성 여부 확인</span>
+        <span class="tag">CO₂ 흡착능 평가</span>
+        <span class="tag">기공 구조 분석</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+</section>
+<!-- EDUCATION & TRAINING -->
+<section id="education">
+  <p class="section-label">Education</p>
+  <h2 class="section-title">학력</h2>
+  <div class="divider"></div>
+
+  <div class="training-grid" style="grid-template-columns: 1fr;">
+    <div class="training-card" style="border-left: 3px solid var(--accent);">
+      <p class="training-year">학사 졸업 · 2020.03 – 2025.02</p>
+      <p class="training-name">응용화학공학부 응용화학전공</p>
+      <p class="training-org">경북대학교</p>
+      </div>
+    </div>
+  </div>
+
+  <p class="section-label" style="margin-top: 3rem;">Training</p>
+  <h2 class="section-title">교육 이수</h2>
+  <div class="divider"></div>
+
+  <div class="training-grid">
+    <div class="training-card">
+      <p class="training-year">교육 이수</p>
+      <p class="training-name">KS Q ISO/IEC 17025 운영실무</p>
+      <p class="training-org">시험소 품질경영 교육기관</p>
+<a href="https://drive.google.com/file/d/1447Wk-6f-ysqqviE9xp-Q4lm8Ujr_obY/view?usp=sharing" target="_blank" style="
+  display: inline-block;
+  margin-top: 0.75rem;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  padding: 3px 10px;
+  border: 1px solid var(--accent);
+  border-radius: 2px;
+  color: var(--accent);
+  text-decoration: none;
+">이수증 보기 →</a>
+    </div>
+    <div class="training-card">
+      <p class="training-year">교육 이수</p>
+      <p class="training-name">바이오의약품 GMP 교육</p>
+      <p class="training-org">한국제약바이오협회</p>
+<a href="https://drive.google.com/file/d/1zI2sJkYpGQhgo85VnNnjn5a3tmGjWWNW/view?usp=sharing" target="_blank" style="
+  display: inline-block;
+  margin-top: 0.75rem;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  padding: 3px 10px;
+  border: 1px solid var(--accent);
+  border-radius: 2px;
+  color: var(--accent);
+  text-decoration: none;
+">이수증 보기 →</a>
+    </div>
+    <div class="training-card">
+      <p class="training-year">교육 이수</p>
+      <p class="training-name">HPLC 분석 전문 교육</p>
+      <p class="training-org">이매스 (EMAS)</p>
+<a href="https://drive.google.com/file/d/18IN8NbRpygVsnM_Ik-oLGLniW6k9uapd/view?usp=sharing" target="_blank" style="
+  display: inline-block;
+  margin-top: 0.75rem;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  padding: 3px 10px;
+  border: 1px solid var(--accent);
+  border-radius: 2px;
+  color: var(--accent);
+  text-decoration: none;
+">이수증 보기 →</a>
+    </div>
+    <div class="training-card">
+      <p class="training-year">교육 이수</p>
+      <p class="training-name">연구장비분야 전문인력양성과정 시험분석 Ⅰ</p>
+      <p class="training-org">KOTITI 시험연구원</p>
+<a href="여기에_링크" target="_blank" style="
+  display: inline-block;
+  margin-top: 0.75rem;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  padding: 3px 10px;
+  border: 1px solid var(--accent);
+  border-radius: 2px;
+  color: var(--accent);
+  text-decoration: none;
+">이수증 보기 →</a>
+    </div>
+  </div>
+</section>
+
+<!-- REFERENCE -->
+<div id="reference">
+  <div>
+    <p class="section-label">Reference</p>
+    <h2 class="section-title" style="color:var(--bg);">추천인</h2>
+    <div class="divider"></div>
+    <div class="ref-card">
+      <div class="ref-initial">강</div>
+      <div>
+        <p class="ref-name">강미소 박사</p>
+        <p class="ref-position">한국화학연구원 · 분리정제연구센터</p>
+        <p class="ref-note">
+          한국화학연구원 인턴연구원 재직 기간(2025.09–2026.02) 동안 OSN 연구과제의
+          지도 박사님이셨으며, 연구 기여도 및 역량에 대한 추천서 제공 의사를 밝혀주셨습니다.
+        </p>
+        <p class="ref-contact-note">* 추천서 및 연락처는 요청 시 제공 가능합니다.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-name">박유진</span>
+  <div class="footer-links">
+    <a href="mailto:tpfbs2@naver.com">tpfbs2@naver.com</a>
+    <a href="#">LinkedIn</a>
+  </div>
+</footer>
+
+</body>
+</html>
